@@ -25,7 +25,13 @@ public class MainActivity extends FragmentActivity {
 		Utils.printHashKey(getApplicationContext());
 
 		setContentView(R.layout.activity_main);
-		addFragment();
+
+        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame_layout, new MainFragment());
+            fragmentTransaction.commit();
+        }
 	}
 
 	@Override
@@ -38,13 +44,6 @@ public class MainActivity extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data);
-	}
-
-	private void addFragment() {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.add(R.id.frame_layout, new MainFragment());
-		fragmentTransaction.commit();
 	}
 
 }
